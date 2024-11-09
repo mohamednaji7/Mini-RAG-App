@@ -21,4 +21,10 @@ IEEE-Papers-QA is a Retrieval-Augmented Generation (RAG) system built to query a
     ```bash
     $ pip install -r requirements.txt
     ```
+5) run the server
+    ```bash
+    $ cd src
+    $ uvicorn main:app --reload
+    ```
+    the `--reload` is to force reload the server when the base code is edited
 
