@@ -22,9 +22,3 @@ IEEE-Papers-QA is a Retrieval-Augmented Generation (RAG) system built to query a
     $ pip install -r requirements.txt
     ```
 
-## Requirements
-1) set you OpenAI API KEY by copying `.env.example` file to ".env"
-    ```bash
-    $ cp .env.example .env
-    ```
-2) change `OpenAI_API_KEY` to your "sk-..." in `.env` file  
