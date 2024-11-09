@@ -9,13 +9,22 @@ IEEE-Papers-QA is a Retrieval-Augmented Generation (RAG) system built to query a
 ### Set-up
 1) use this [doc](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) for download and installation 
 2) Create a new isolated conda environment 
-```
-bash
-$ conda creat -n ieee-papers-qa-env python=3.8 
-```
-3)activate the environment
-```
-bash
-$ source activate base 
-$ conda activate ieee-papers-qa-env
-```
+    ```bash
+    $ conda creat -n ieee-papers-qa-env python=3.8 
+    ```
+3) activate the environment
+    ```bash
+    $ source activate base 
+    $ conda activate ieee-papers-qa-env
+    ```
+4) install requirements
+    ```bash
+    $ pip install -r requirements.txt
+    ```
+
+## Requirements
+1) set you OpenAI API KEY by copying `.env.example` file to ".env"
+    ```bash
+    $ cp .env.example .env
+    ```
+2) change `OpenAI_API_KEY` to your "sk-..." in `.env` file  
