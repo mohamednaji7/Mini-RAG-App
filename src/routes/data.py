@@ -1,14 +1,10 @@
-from fastapi import APIRouter, UploadFile, status, Depends
+from fastapi import APIRouter, UploadFile, status
 from fastapi.responses import JSONResponse
 from helper.config import get_settings, Settings
-from controllers import DataController, ProjectController
+from controllers import DataController, ProjectController, ProcessController
 from models import ResponseSignal
-import aiofiles, logging
-
-logger = logging.getLogger('uvicorn.error')
-
-app_settings = get_settings()
-
+from .schemes.ProcessRequest import ProcessRequest
+import os
 data_router = APIRouter(
     prefix = "/api/v1/data", #endpoint
     tags = ["api_v1", "data"],
@@ -16,11 +12,13 @@ data_router = APIRouter(
 
 
 @data_router.post("/upload/{project_id}")
-async def upload(project_id: str, file: UploadFile,
-                 app_settings: Settings = Depends(get_settings) ):
+async def upload(project_id: str, file: UploadFile ):
     data_cntrlr = DataController()
-    project_path = ProjectController().get_project_path(project_id) 
     
+    # Process the filename and get the project path
+    project_path = ProjectController().get_project_path(project_id) 
+    name, ext = data_cntrlr.processName(org_filename=file.filename)
+
     # Check if the file type is valid
     if not data_cntrlr.valid_file_type(file):
         status_code = status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
@@ -31,10 +29,6 @@ async def upload(project_id: str, file: UploadFile,
         status_code = status.HTTP_400_BAD_REQUEST
         msg = ResponseSignal.file_size_error.value
     else:
-        # Process the filename and get the project path
-        project_path = ProjectController().get_project_path(project_id) 
-        name, ext = data_cntrlr.processName(org_filename=file.filename)
-
         # Check if the file was already written
         if data_cntrlr.file_was_written(project_path, name=name, ext=ext):
             status_code = status.HTTP_409_CONFLICT
@@ -54,8 +48,18 @@ async def upload(project_id: str, file: UploadFile,
     return JSONResponse(
             status_code = status_code,
             content = {
-                "details": msg
+                "details": msg,
+                "file_id": data_cntrlr.get_existing_file(project_path, name, ext)
+
             }
         )
     
-   
+@data_router.post("/process/{project_id}") 
+async def processfile(project_id: str, process_req: ProcessRequest):
+    project_path = ProjectController().get_project_path(project_id) 
+    data_cntrlr = DataController()
+    prcs_cntrl = ProcessController()
+    file_id = process_req.file_id
+    name, ext = data_cntrlr.processName(file_id)
+    loader = prcs_cntrl.get_file_content(project_path, file_id, ext)
+    return loader, name

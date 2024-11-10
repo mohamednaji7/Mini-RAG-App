@@ -1,5 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
+from langchain_community.document_loaders import TextLoader, PyMuPDFLoader   
+
 
 class Settings(BaseSettings):
 
@@ -20,3 +22,9 @@ def get_settings():
 def get_projects_path():
     root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     return os.path.join(root, "assets", "projects")
+
+def get_loader(ext):
+    return {
+        ".txt": TextLoader,
+        ".pdf": PyMuPDFLoader,
+    }[ext]
