@@ -47,7 +47,7 @@ class DataController(BaseController):
                     await f.write(chunk)
                 return True
         except Exception as e:
-            logger.error("Error while writng the file: {e}")
+            logger.error(f"Error while writng the file: {e}")
             return False
 
                   

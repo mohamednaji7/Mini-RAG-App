@@ -42,7 +42,7 @@ async def upload(project_id: str, file: UploadFile,
 
         else:
             # Try to write the file
-            done = data_cntrlr.write_file(project_path, file)
+            done = await data_cntrlr.write_file(project_path, file)
             if done: 
                 status_code = status.HTTP_200_OK
                 msg = ResponseSignal.file_upload_success.value
