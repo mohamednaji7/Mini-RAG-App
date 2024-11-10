@@ -6,3 +6,4 @@ class ResponseSignal(Enum):
     upload_sucess = "File Uploaded Succesfully"
     upload_falied = "File Upload Falied"
     file_validated = "File got  Valdiated"
+    file_duplicated = "File Already Uploaded"

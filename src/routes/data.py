@@ -2,7 +2,8 @@ from fastapi import APIRouter, UploadFile, status, Depends
 from fastapi.responses import JSONResponse
 from helper.config import get_settings, Settings
 from controllers import DataController
-from models.enums import ResponseSignal 
+from models import ResponseSignal
+
 import aiofiles, logging
 
 logger = logging.getLogger('uvicorn.error')
@@ -20,6 +21,15 @@ async def upload(project_id: str, file: UploadFile,
                  app_settings: Settings = Depends(get_settings) ):
     data_cntrlr = DataController()
     is_valid, msg = data_cntrlr.validate_uploaded_file(file)
+    
+    if not is_valid:
+        return JSONResponse(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            content = {
+                "msg": msg
+            }
+        )
+    
     file_path = data_cntrlr.get_unique_path(file.filename,
                                             project_id=project_id)
     
@@ -27,6 +37,7 @@ async def upload(project_id: str, file: UploadFile,
         async with aiofiles.open(file_path, "wb") as f:
             while chunk := await file.read(app_settings.FILE_CHUNK_SIZE):
                 await f.write(chunk)
+        
     except Exception as e:
         logger.error("Error while writng the file: {e}")
         return JSONResponse(
@@ -35,16 +46,9 @@ async def upload(project_id: str, file: UploadFile,
                 "msg": ResponseSignal.upload_failed.value
             }
         )
-
-    if not is_valid:
-        return JSONResponse(
-            status_code = status.HTTP_400_BAD_REQUEST,
+    
+    return JSONResponse(
             content = {
-                "msg": msg
+                "msg": ResponseSignal.upload_sucess.value
             }
         )
-    else:
-        return{
-            "file name": file.filename,
-            "file path": file_path
-        }
