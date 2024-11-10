@@ -4,4 +4,3 @@ pydantic-settings==2.2.1
 uuid==1.30
 aiofiles==23.2.1
 motor==2.5.0
-pymongo==3.12
