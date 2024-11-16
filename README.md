@@ -1,4 +1,4 @@
-# AI Math Problem Solver Web App
+# AI Math Problems Solver Web App
 ## Description
 - (In Progress)  
 
