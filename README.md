@@ -7,7 +7,6 @@ building a mini RAG app to be a base app for my future apps.
 - IEEE papers questions and answer app
 
 
-
 ## Environment
 python 3.8 or later  
 - download and install
