@@ -20,7 +20,7 @@ python 3.8 or later
     git clone https://github.com/mohamednaji7/Mini-RAG-App.git 
     ```
     or click Code > Download ZIP > extract it 
-1) change current directory
+1) change the current directory
     ```bash
     cd Mini-RAG-App/src
     ```
