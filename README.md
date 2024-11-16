@@ -17,21 +17,21 @@ python 3.8 or later
 ### Set-up
 0) clone this repo in your system
     ```bash
-    git clone https://github.com/mohamednaji7/IEEE-Papers-QA.git 
+    git clone https://github.com/mohamednaji7/Mini-RAG-App.git 
     ```
-    or click Code > Download ZIP > extraxt it 
-1) chnage current directory
+    or click Code > Download ZIP > extract it 
+1) change current directory
     ```bash
-    cd IEEE-Papers-QA/src
+    cd Mini-RAG-App/src
     ```
 2) Create a new isolated conda environment 
     ```bash
-    conda creat -n ieee-papers-qa-env python=3.8 
+    conda create -n mini-rag-env python=3.8 
     ```
 3) activate the environment
     ```bash
     source activate base 
-    conda activate ieee-papers-qa-env
+    conda activate mini-rag-env
     ```
 4) install requirements
     ```bash
