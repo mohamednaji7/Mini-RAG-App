@@ -1,4 +1,4 @@
-# Mini RAG Web App (In Progress) 
+# Mini RAG Web App -  (ON HOLD)
 ## Description 
 
 building a mini RAG app to be a base app for my future apps. 
